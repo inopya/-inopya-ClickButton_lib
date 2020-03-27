@@ -46,7 +46,7 @@
 					Ejemplo de uso:
   *******************************************************
    >> solo con el numero de pin
-      ClickButton mi_pulsador_1(uint8_t pin); el resto de parametros por defecto: son (30,100,380)
+      ClickButton mi_pulsador_1(uint8_t pin); el resto de parametros por defecto: son (30,150,380)
    
    >> o bien definiendo todos los parametros disponibles
       ClickButton mi_pulsador_2(uint8_t pin, uint8_t antirrebotes, uint16_t corta, uint16_t larga);
@@ -152,44 +152,47 @@ boolean FLAG_DEDUG_leds = true;
 
 void loop()
 { 
-  //lectura del pulsador
+  /* lectura del pulsador */
   uint8_t estado_pulsador_1 = pulsador_1.Read();
   
   if(FLAG_DEDUG_leds == true){
-    /*
-     * Podemos probarla usando tres leds como salidas, uno para cada tipo de pulsacion.
-     * Se encenderan y apagaran alternandose con cada pulsacion detectada de un mismo tipo.
-     */
+    /* 
+	 * Podemos probarla usando tres leds como salidas, uno para cada tipo de pulsacion.
+     * Se encenderan y apagaran alternandose con cada pulsacion detectada de un mismo tipo. 
+	 */
+	 
+	// Deteccion de pulsacion corta
     if (estado_pulsador_1 == 1){
       digitalWrite(LED_Click_simple, NOT digitalRead(LED_Click_simple));
     }
-  
-    if (estado_pulsador_1 == 2){
+    // Deteccion de doble pulsacion
+    else if (estado_pulsador_1 == 2){
       digitalWrite(LED_Click_doble, NOT digitalRead(LED_Click_doble));
     }
-    if (estado_pulsador_1 == 3){
+	// Deteccion de pulsacion larga 
+    else if (estado_pulsador_1 == 3){
       digitalWrite(LED_Click_largo, NOT digitalRead(LED_Click_largo));
     }
   }
   
   if(FLAG_DEDUG_serial == true){  
     /* 
-     *  Si no se desea montar la parte hardware de los leds, 
+	 *  Si no se desea montar la parte hardware de los leds, 
      *  se puede probar mediante mensajes en el puerto serie.
-     *  Recuerda que necesitas al menos un pulsador como entrada.
-     */
+     *  Recuerda que necesitas al menos un pulsador como entrada. 
+	 */
+	 
+	// Deteccion de pulsacion corta 
     if (estado_pulsador_1 == 1){
-      contadorSimple++;
-      Serial.print(F("SIMPLE "));Serial.println(contadorSimple);
+      Serial.print(F("SIMPLE "));Serial.println(++contadorSimple);
     }
-  
-    if (estado_pulsador_1 == 2){
-      contadorDoble++;
-      Serial.print(F("DOBLE "));Serial.println(contadorDoble);
+    // Deteccion de doble pulsacion 
+    else if (estado_pulsador_1 == 2){
+      Serial.print(F("DOBLE "));Serial.println(++contadorDoble);
     }
-    if (estado_pulsador_1 == 3){
-      contadorLargo++;
-      Serial.print(F("LARGA "));Serial.println(contadorLargo);
+	// Deteccion de pulsacion larga 
+    else if (estado_pulsador_1 == 3){
+      Serial.print(F("LARGA "));Serial.println(++contadorLargo);
     }
   }
 }
