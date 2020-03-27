@@ -46,7 +46,7 @@
 					Ejemplo de uso:
   *******************************************************
    >> solo con el numero de pin
-      ClickButton mi_pulsador_1(uint8_t pin); el resto de parametros por defecto: son (30,150,380)
+      ClickButton mi_pulsador_1(uint8_t pin); el resto de parametros por defecto: son (30,100,380)
    
    >> o bien definiendo todos los parametros disponibles
       ClickButton mi_pulsador_2(uint8_t pin, uint8_t antirrebotes, uint16_t corta, uint16_t larga);
