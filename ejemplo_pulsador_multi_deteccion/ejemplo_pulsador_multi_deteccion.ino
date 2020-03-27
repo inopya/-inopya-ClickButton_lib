@@ -98,16 +98,31 @@ uint16_t contadorDoble = 0;          //se incrementa en cada deteccion de una pu
 uint16_t contadorLargo = 0;          //se incrementa en cada deteccion de una pulsacion larga
 
 
+/* 
+* Podemos probarla usando tres leds como salidas, uno para cada tipo de pulsacion.
+* Se encenderan y apagaran alternandose con cada pulsacion detectada de un mismo tipo. 
+*/
+boolean FLAG_DEDUG_leds = true;
+
+/* 
+ *  Si no se desea montar la parte hardware de los leds, 
+ *  se puede probar mediante mensajes en el puerto serie.
+ *  Recuerda que necesitas al menos un pulsador como entrada. 
+*/
+boolean FLAG_DEDUG_serial = true;
+
+
+
 //------------------------------------------------------------------------
 // Creacion de objetos de la clase ClickButton
 //------------------------------------------------------------------------
 
 /* Podemos llamar al constructor de dos formas */
-//ClickButton pulsador_1(PIN_pulsador);        // creacion de un objeto definiendo solo el pin de nuestro pulsador
-											   // el resto de valores por defecto (30, 100, 380)
+//ClickButton pulsador_1(PIN_pulsador);               // creacion de un objeto definiendo solo el pin de nuestro pulsador
+											                                // el resto de valores por defecto (30, 100, 380)
                                 
-ClickButton pulsador_1(PIN_pulsador, 40, 120, 380);   	// creacion de un objeto definiendo todos sus parametros:
-														// uint8_t pin, uint8_t antirrebotes, uint16_t corta, uint16_t larga
+ClickButton pulsador_1(PIN_pulsador, 40, 120, 380);   // creacion de un objeto definiendo todos sus parametros:
+														                          // uint8_t pin, uint8_t antirrebotes, uint16_t corta, uint16_t larga
 
 
 
@@ -119,7 +134,8 @@ ClickButton pulsador_1(PIN_pulsador, 40, 120, 380);   	// creacion de un objeto 
 
 void setup()  
 {
-  Serial.begin(115200);   	// Se inicia el puerto serie para depuracion
+  Serial.begin(115200);   	  // Se inicia el puerto serie para depuracion
+  
   Serial.println(F("Ejemplo de uso para la libreria ClickButton"));
   Serial.println(F("https://github.com/inopya\n"));
   Serial.println(F("Esta libreria permite el control de pulsadores PULLDOWN"));
@@ -146,51 +162,36 @@ void setup()
 //***************************************************************************************************
 //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm 
 
-
-boolean FLAG_DEDUG_serial = true;
-boolean FLAG_DEDUG_leds = true;
-
 void loop()
 { 
   /* lectura del pulsador */
   uint8_t estado_pulsador_1 = pulsador_1.Read();
   
-  if(FLAG_DEDUG_leds == true){
-    /* 
-	 * Podemos probarla usando tres leds como salidas, uno para cada tipo de pulsacion.
-     * Se encenderan y apagaran alternandose con cada pulsacion detectada de un mismo tipo. 
-	 */
-	 
-	// Deteccion de pulsacion corta
+  if(FLAG_DEDUG_leds == true){	 
+  	/* Deteccion de pulsacion corta */
     if (estado_pulsador_1 == 1){
       digitalWrite(LED_Click_simple, NOT digitalRead(LED_Click_simple));
     }
-    // Deteccion de doble pulsacion
+    /* Deteccion de doble pulsacion */
     else if (estado_pulsador_1 == 2){
       digitalWrite(LED_Click_doble, NOT digitalRead(LED_Click_doble));
     }
-	// Deteccion de pulsacion larga 
+  	/* Deteccion de pulsacion larga */
     else if (estado_pulsador_1 == 3){
       digitalWrite(LED_Click_largo, NOT digitalRead(LED_Click_largo));
     }
   }
   
   if(FLAG_DEDUG_serial == true){  
-    /* 
-	 *  Si no se desea montar la parte hardware de los leds, 
-     *  se puede probar mediante mensajes en el puerto serie.
-     *  Recuerda que necesitas al menos un pulsador como entrada. 
-	 */
-	 
-	// Deteccion de pulsacion corta 
+    /* Deteccion de pulsacion corta */ 
     if (estado_pulsador_1 == 1){
       Serial.print(F("SIMPLE "));Serial.println(++contadorSimple);
     }
-    // Deteccion de doble pulsacion 
+    /* Deteccion de doble pulsacion */ 
     else if (estado_pulsador_1 == 2){
       Serial.print(F("DOBLE "));Serial.println(++contadorDoble);
     }
-	// Deteccion de pulsacion larga 
+	  /* Deteccion de pulsacion larga */
     else if (estado_pulsador_1 == 3){
       Serial.print(F("LARGA "));Serial.println(++contadorLargo);
     }
