@@ -9,8 +9,8 @@
  # NOTAS DE LA VERSION
  
  # Esta libreria cuenta con una actualizacion, la v2
-	 *que puede consultarse en el repositorio: https://github.com/inopya/inopya_ClickButton_v2_pullup
-	Puede usarse la v2 en programas que hiciesen usno de esta primera versio, ya que todo los metodos de esta, estan disponibles en la version2*
+ *que puede consultarse en el repositorio: https://github.com/inopya/inopya_ClickButton_v2_pullup
+Puede usarse la v2 en programas que hiciesen usno de esta primera versio, ya que todo los metodos de esta, estan disponibles en la version2*
 
   
   Esta libreria permite el control de pulsadores en los que podremos detectar tres tipos de eventos 
